@@ -1,85 +1,80 @@
 #include <iostream>
 #include<string>
 #include<fstream>
-struct elem
-{
-	int data1, data2, data3;
-	elem *prev, *next;
-};
-struct queue
-{
-	elem *back, *front, *dod;
-	queue(void) :back(NULL), front(NULL), dod(NULL) {}
-};
 struct coo
 {
 	int a, b;
 };
+char returnVal(int x)
+{
+	x=x+87;
+    return (char)x;
+}
 using namespace std;
-void push_back(queue &a, coo &p, int &x);
-void pop_back(queue &a, int &v1, int &v2, int &v3);
-void alg(queue &one, coo &p, coo &k, coo &napram, int **A, int &i, int &j, int &h, int &g, int &w);
 int main()
 {
 	ifstream input("input.txt");
 	string d[25];
-	getline(input, d[0], '\n');
-	int n = d[0].size();
-	int m = 1;
-	while (input.eof())
+	int m = 0;
+	while (!input.eof())
 	{
 		getline(input, d[m], '\n');
 		m++;
-		cout << 2;
-
 	}
+	int n = d[0].size();
 	int **A=new int*[n];
-	for (int r = 0; r < n; r++)
-	{
-		cout << 3;
-		A[r] = new int[m];
-	}
 	m--;
+	for (int r = 0; r < m; r++)
+	{
+		cout <<d[r] << "\n";
+		A[r] = new int[n];
+	}
 	for (int i = 0; i < m; i++)
 	{
-		cout << 1;
 		for (int j = 0; j < n; j++)
 		{
 			if (d[i][j] == ' ')
 				A[i][j] = -2;
 			else
 				A[i][j] = -1;
-			cout << A[i][j] << " ";
 		}
-		cout << "\n";
 	}
-	int i = 0, j = 1, h = 0, g = 0, w = 0;
-	queue one;
-	coo napram;
 	coo p, k;
-	p.a = 2; p.b = 1; k.a = 9; k.b = 6;
-	alg(one, p, k, napram, A, i, j, h, g, w);
+	p.a = 1; p.b = 2; k.a = 1;  k.b = 9;
 	ofstream output("output.txt");
-	char r = 'a';
-	
+	char r;
+	int o;
 	for (int i = 0; i < m; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			if (A[j][i] == -2)
+			if (A[i][j] == -2||A[i][j]==-3)
+			{
 				output << ' ';
-			else if (A[j][i] == -1)
+				cout << ' ' << "|";
+			}
+			else if (A[i][j] == -1)
+			{
 				output << 'X';
-			else if (A[j][i] < 10)
-				output << A[j][i];
+				cout << 'X' << "|";
+			}
+			else if (A[i][j] < 10)
+			{
+				o=A[i][j];
+				output << o;
+				cout << A[i][j] << "|";
+			}
 			else
 			{
+				r=returnVal(A[i][j]);
 				output << r;
-				r++;
+				cout << r << "|";
 			}
 		}
+		output << "\n";
+		cout << "\n";
 	}
-	input.close(); output.close();
+	
 	return 0;
 }
 void push_back(queue &a, coo &p, int &i)
@@ -91,7 +86,7 @@ void push_back(queue &a, coo &p, int &i)
 	temp->prev = NULL;
 	if (!a.back)
 	{
-		a.back = a.front =a.dod= temp; temp->next = NULL;
+		a.back = a.front = temp; temp->next = NULL;
 	}
 	else
 	{
@@ -100,11 +95,15 @@ void push_back(queue &a, coo &p, int &i)
 		a.back = temp;
 	}
 }
-void print(queue &a, coo &b)
+void print(queue &a, coo &b, int &j)
 {
-	b.a = a.dod->data1;
-	b.b = a.dod->data2;
-	a.dod = a.dod->next;
+	elem *cursor = a.back;
+	for(int i=0; i<j-1; i++)
+	{
+		cursor = cursor->next;
+	}
+	b.a=cursor->data1;
+	b.b = cursor->data2;
 }
 void pop_back(queue &a, int &v1, int &v2, int &v3)
 {
@@ -138,7 +137,8 @@ void alg(queue &one, coo &p, coo &k, coo &napram, int **A, int &i, int &j, int &
 		j++;
 		for (int r = 0; r < h; r++)
 		{
-			print(one, napram);
+			int o = h - r+g;
+			print(one, napram, o);
 			if (A[napram.a][napram.b - 1] == -2)
 			{
 				g++; w++;
@@ -149,6 +149,7 @@ void alg(queue &one, coo &p, coo &k, coo &napram, int **A, int &i, int &j, int &
 					j--;
 					break;
 				}
+				A[napram.a][napram.b]=-3;
 				napram.b = napram.b + 1;
 			}
 			if (A[napram.a][napram.b + 1] == -2)
@@ -161,6 +162,7 @@ void alg(queue &one, coo &p, coo &k, coo &napram, int **A, int &i, int &j, int &
 					j--;
 					break;
 				}
+				A[napram.a][napram.b]=-3;
 				napram.b = napram.b - 1;
 			}
 			if (A[napram.a - 1][napram.b] == -2)
@@ -173,6 +175,7 @@ void alg(queue &one, coo &p, coo &k, coo &napram, int **A, int &i, int &j, int &
 					j--;
 					break;
 				}
+				A[napram.a][napram.b]=-3;
 				napram.a = napram.a + 1;
 			}
 			if (A[napram.a + 1][napram.b] == -2)
@@ -185,13 +188,13 @@ void alg(queue &one, coo &p, coo &k, coo &napram, int **A, int &i, int &j, int &
 					j--;
 					break;
 				}
+				A[napram.a][napram.b]=-3;
 				napram.a = napram.a - 1;
 			}
 		}
 		h = g;
 		g = 0;
 	}
-	///////////////////////////////////////
 	pop_back(one, h, g, j);
 	napram.a = h; napram.b = g;
 	A[h][g] = j;
