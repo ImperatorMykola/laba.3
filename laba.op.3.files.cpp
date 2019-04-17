@@ -39,8 +39,10 @@ int main()
 				A[i][j] = -1;
 		}
 	}
-	coo p, k;
-	p.a = 1; p.b = 2; k.a = 1;  k.b = 9;
+	queue one;
+	coo napram;
+	p.a = 2; p.b = 1; k.a = 9; k.b = 6;
+	alg(one, p, k, napram, A, i, j, h, g, w);
 	ofstream output("output.txt");
 	char r;
 	int o;
