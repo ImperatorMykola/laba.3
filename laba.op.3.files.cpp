@@ -52,6 +52,7 @@ int main()
 				A[i][j] = -1;
 		}
 	}
+	int i = 0, j = 1, h = 0, g = 0, w = 0; 
 	queue one;
 	coo napram;
 	p.a = 2; p.b = 1; k.a = 9; k.b = 6;
