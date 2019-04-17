@@ -26,7 +26,6 @@ int main()
 	m--;
 	for (int r = 0; r < m; r++)
 	{
-		cout <<d[r] << "\n";
 		A[r] = new int[n];
 	}
 	for (int i = 0; i < m; i++)
@@ -53,24 +52,20 @@ int main()
 			if (A[i][j] == -2||A[i][j]==-3)
 			{
 				output << ' ';
-				cout << ' ' << "|";
 			}
 			else if (A[i][j] == -1)
 			{
 				output << 'X';
-				cout << 'X' << "|";
 			}
 			else if (A[i][j] < 10)
 			{
 				o=A[i][j];
 				output << o;
-				cout << A[i][j] << "|";
 			}
 			else
 			{
 				r=returnVal(A[i][j]);
 				output << r;
-				cout << r << "|";
 			}
 		}
 		output << "\n";
