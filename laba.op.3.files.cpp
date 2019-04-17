@@ -1,6 +1,16 @@
 #include <iostream>
 #include<string>
 #include<fstream>
+struct elem
+{
+	int data1, data2, data3;
+	elem *prev, *next;
+};
+struct queue
+{
+	elem *back, *front;
+	queue(void) :back(NULL), front(NULL) {}
+};
 struct coo
 {
 	int a, b;
@@ -11,6 +21,10 @@ char returnVal(int x)
     return (char)x;
 }
 using namespace std;
+void push_back(queue &a, coo &p, int &x);
+void pop_back(queue &a, int &v1, int &v2, int &v3);
+void alg(queue &one, coo &p, coo &k, coo &napram, int **A, int &i, int &j, int &h, int &g, int &w);
+void print(queue &a, coo &b, int &);
 int main()
 {
 	ifstream input("input.txt");
